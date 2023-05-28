@@ -15,4 +15,11 @@ public class DestinationModelConverter {
                 .hotels(Arrays.asList(destination.getHotels().split(",")))
                 .build();
     }
+
+    public Destination convertToEntity(DestinationDto destinationDto) {
+        return Destination.builder()
+                .destCode(destinationDto.getCode())
+                .destName(destinationDto.getName())
+                .build();
+    }
 }

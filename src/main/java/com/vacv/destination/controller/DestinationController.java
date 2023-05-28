@@ -29,9 +29,9 @@ public class DestinationController {
 
     @PatchMapping("/{code}")
     public ResponseEntity<Void> updateDestinationById(@PathVariable String code,
-                                                      @RequestBody Destination destination) {
-        destinationService.updateDestination(code, destination);
-        return ResponseEntity.ok().build();
+                                                      @RequestBody DestinationDto destinationDto) {
+        destinationService.updateDestination(code, destinationModelConverter.convertToEntity(destinationDto));
+         return ResponseEntity.ok().build();
     }
 
 }
