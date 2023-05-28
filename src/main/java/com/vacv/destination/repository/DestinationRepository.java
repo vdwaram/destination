@@ -2,40 +2,37 @@ package com.vacv.destination.repository;
 
 import com.vacv.destination.client.dto.Destination;
 import com.vacv.destination.exception.NotFoundException;
-import org.springframework.cache.Cache;
-import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Repository;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Repository
 public class DestinationRepository {
-
-    private final CacheManager cacheManager;
-
-    public DestinationRepository(CacheManager cacheManager) {
-        this.cacheManager = cacheManager;
-    }
+    private Map<String, Destination> destinationMap = new ConcurrentHashMap<>();
 
     public void putItem(Destination destination) {
-        Cache cache = cacheManager.getCache("destinations");
-        cache.putIfAbsent(destination.getDestCode(), destination);
+        destinationMap.putIfAbsent(destination.getDestCode(), destination);
+
     }
 
     public Destination findDestination(String code) {
-        Cache cache = cacheManager.getCache("destinations");
-        Cache.ValueWrapper valueWrapper = cache.get(code);
-        if (valueWrapper == null) {
+        Destination destination = destinationMap.get(code);
+        if (destination == null) {
             throw new NotFoundException("Failed to find given code");
         }
-        return (Destination) valueWrapper.get();
+        return destination;
     }
 
     public void deleteDestination(String code) {
-        Cache cache = cacheManager.getCache("destinations");
-        cache.evictIfPresent(code);
+        destinationMap.remove(code);
     }
 
     public void updateDestination(Destination destination) {
-        Cache cache = cacheManager.getCache("destinations");
-        cache.put(destination.getDestCode(), destination);
+        destinationMap.put(destination.getDestCode(), destination);
+    }
+
+    public List<Destination> getAllDestinations() {
+        return destinationMap.values().stream().toList();
     }
 }

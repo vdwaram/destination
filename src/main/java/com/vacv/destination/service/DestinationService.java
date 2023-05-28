@@ -5,6 +5,8 @@ import com.vacv.destination.repository.DestinationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class DestinationService {
@@ -23,5 +25,8 @@ public class DestinationService {
         Destination existingDestination = destinationRepository.findDestination(code);
         existingDestination.setDestName(destination.getDestName());
         destinationRepository.updateDestination(existingDestination);
+    }
+    public List<Destination> getDestinations() {
+        return destinationRepository.getAllDestinations();
     }
 }

@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/destinations")
 @RequiredArgsConstructor
@@ -31,7 +33,13 @@ public class DestinationController {
     public ResponseEntity<Void> updateDestinationById(@PathVariable String code,
                                                       @RequestBody DestinationDto destinationDto) {
         destinationService.updateDestination(code, destinationModelConverter.convertToEntity(destinationDto));
-         return ResponseEntity.ok().build();
+        return ResponseEntity.ok().build();
     }
 
+    @GetMapping
+    public ResponseEntity<List<DestinationDto>> getDestinations() {
+        List<Destination> destinations = destinationService.getDestinations();
+        List<DestinationDto> destinationDtos = destinations.stream().map(destination -> destinationModelConverter.convertToDto(destination)).toList();
+        return ResponseEntity.ok(destinationDtos);
+    }
 }
