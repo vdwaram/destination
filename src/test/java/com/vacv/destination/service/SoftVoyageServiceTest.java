@@ -61,17 +61,18 @@ public class SoftVoyageServiceTest {
                 "</XML>";
         when(softVoyageClient.getXMlGateways()).thenReturn(gatewayXml);
 
-        Destination destination1 = new Destination();
-        destination1.setDestCode("CODE1");
-        destination1.setDestName("Destination 1");
+        Destination destination1 = Destination.builder()
+                .destCode("CODE1")
+                .destName("Destination 1")
+                .build();
 
-        Destination destination2 = new Destination();
-        destination2.setDestCode("CODE2");
-        destination2.setDestName("Destination 2");
+        Destination destination2 = Destination.builder()
+                .destCode("CODE2")
+                .destName("Destination 2").build();
 
         softVoyageService.loadDestinations();
 
-        verify(softVoyageClient, times(1)).getXMlGateways();
+        verify(softVoyageClient).getXMlGateways();
         verify(destinationRepository, times(1)).putItem(destination1);
         verify(destinationRepository, times(1)).putItem(destination2);
 

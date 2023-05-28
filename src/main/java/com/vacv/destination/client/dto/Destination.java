@@ -6,9 +6,11 @@ import javax.xml.bind.annotation.*;
 
 @Getter
 @Setter
-@RequiredArgsConstructor
+@AllArgsConstructor
 @ToString
 @EqualsAndHashCode
+@Builder
+@NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Destination {
     @XmlElement(name = "DEST_CODE")
