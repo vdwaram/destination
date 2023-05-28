@@ -5,7 +5,6 @@ import com.vacv.destination.converter.DestinationModelConverter;
 import com.vacv.destination.dto.DestinationDto;
 import com.vacv.destination.service.DestinationService;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
