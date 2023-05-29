@@ -15,15 +15,7 @@ paths:
             application/json:
               schema:
                 type: array
-                items:
-                  type: object
-                  properties:
-                    code:
-                      type: string
-                    name:
-                      type: string
-                    hotelCodes:
-                      type: array
+                $ref: '#/components/schemas/Destination'
   /destinations/{id}:
     get:
       summary: Get destination by id
@@ -37,20 +29,10 @@ paths:
       responses:
         '200':
           description: OK
-          responseBody:
           content:
             application/json:
               schema:
-                type: object
-                items:
-                  type: object
-                  properties:
-                    code:
-                      type: string
-                    name:
-                      type: string
-                    hotelCodes:
-                      type: array
+                $ref: '#/components/schemas/Destination'
         '404':
           description: Not Found
     patch:
@@ -92,3 +74,18 @@ paths:
           description: No Content
         '404':
           description: No Content
+components:
+  schemas:
+    Destination:
+      type: object
+      properties:
+        code:
+          type: string
+        name:
+          type: string
+        hotelCodes:
+          type: array
+      required:
+        - code
+        - name
+        - hotelCodes
