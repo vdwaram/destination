@@ -35,8 +35,8 @@ tasks.named('test') {
 openApiGenerate {
 	generatorName = 'java'
 	inputSpec = projectDir.toString()+'/src/main/resources/api-contract/destinations.yaml'
-	apiPackage = 'com.vacv.destination.venkata.controller'
-	modelPackage = 'com.vacv.destination.venkata.dto'
+	apiPackage = 'com.vacv.destination.controller'
+	modelPackage = 'com.vacv.destination.dto'
 	invokerPackage = 'com.vacv'
 	configOptions = [
 			library: 'resttemplate',
