@@ -1,7 +1,8 @@
 package com.vacv.destination.converter;
 
 import com.vacv.destination.client.dto.Destination;
-import com.vacv.destination.dto.DestinationDto;
+import com.vacv.destination.openapi.dto.DestinationDto;
+import com.vacv.destination.openapi.dto.PatchDestinationDto;
 import org.springframework.stereotype.Component;
 import java.util.Arrays;
 
@@ -9,16 +10,22 @@ import java.util.Arrays;
 public class DestinationModelConverter {
 
     public DestinationDto convertToDto(Destination destination) {
-        return DestinationDto.builder()
-                .code(destination.getDestCode())
+        DestinationDto destinationDto = new DestinationDto();
+        destinationDto.code(destination.getDestCode())
                 .name(destination.getDestName())
-                .hotels(Arrays.asList(destination.getHotels().split(",")))
-                .build();
+                .setHotelCodes(Arrays.asList(destination.getHotels().split(",")));
+
+        return destinationDto;
     }
 
     public Destination convertToEntity(DestinationDto destinationDto) {
         return Destination.builder()
                 .destCode(destinationDto.getCode())
+                .destName(destinationDto.getName())
+                .build();
+    }
+    public Destination convertToEntity(PatchDestinationDto destinationDto) {
+        return Destination.builder()
                 .destName(destinationDto.getName())
                 .build();
     }
