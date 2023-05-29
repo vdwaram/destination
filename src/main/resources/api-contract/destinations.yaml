@@ -15,10 +15,11 @@ paths:
             application/json:
               schema:
                 type: array
-                $ref: '#/components/schemas/Destination'
-  /destinations/{id}:
+                items:
+                  $ref: '#/components/schemas/Destination'
+  /destinations/{code}:
     get:
-      summary: Get destination by id
+      summary: Get destination by code
       parameters:
         - name: code
           in: path
@@ -58,22 +59,20 @@ paths:
           description: OK
         '404':
           description: Not Found
-
     delete:
       summary: Delete a Destination
       parameters:
         - name: code
-          in: query
+          in: path
           description: Destination code
           required: true
           schema:
             type: string
-
       responses:
         '204':
           description: No Content
         '404':
-          description: No Content
+          description: Not Found
 components:
   schemas:
     Destination:
@@ -87,7 +86,9 @@ components:
           minLength: 1
         hotelCodes:
           type: array
-          minLength: 1
+          minItems: 1
+          items:
+            type: string
       required:
         - code
         - name
