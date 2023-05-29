@@ -5,7 +5,6 @@ import com.vacv.destination.client.dto.Destination;
 import com.vacv.destination.repository.DestinationRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -21,12 +20,12 @@ public class SoftVoyageServiceTest {
     @Mock
     private DestinationRepository destinationRepository;
 
-    @InjectMocks
     private SoftVoyageService softVoyageService;
 
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
+        softVoyageService = new SoftVoyageService(softVoyageClient, destinationRepository);
     }
 
     @Test
