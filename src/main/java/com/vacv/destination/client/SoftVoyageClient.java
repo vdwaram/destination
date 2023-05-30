@@ -1,18 +1,20 @@
 package com.vacv.destination.client;
 
+import com.vacv.destination.config.SoftVoyageClientConfig;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.ExchangeStrategies;
 import org.springframework.web.reactive.function.client.WebClient;
 
 @Component
+@RequiredArgsConstructor
 public class SoftVoyageClient {
-
+    private  final SoftVoyageClientConfig softVoyageClientConfig;
 
     public String getXMlGateways() {
-        int maxBufferSize = 1048576; // 1 MB
         ExchangeStrategies exchangeStrategies = ExchangeStrategies.builder()
-                .codecs(configure -> configure.defaultCodecs().maxInMemorySize(maxBufferSize))
+                .codecs(configure -> configure.defaultCodecs().maxInMemorySize(softVoyageClientConfig.getBuffersize()))
                 .build();
         WebClient webClient = WebClient.builder()
                 .exchangeStrategies(exchangeStrategies)
@@ -20,7 +22,7 @@ public class SoftVoyageClient {
 
 
         return webClient.get()
-                .uri("https://lib.softvoyage.com/cgi-bin/gate_dest_hotels.xml?code_ag=ACV&alias=ACV&language=en&tour_to_display=VAC&with_cdata=y&with_hotel_links=y")
+                .uri(softVoyageClientConfig.getUrl())
                 .accept(MediaType.APPLICATION_XML)
                 .retrieve()
                 .bodyToMono(String.class).block();
