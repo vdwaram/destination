@@ -52,7 +52,7 @@ openApiGenerate {
 			generateApiTests: 'false',
 			generateApi: 'true',
 			generateSupportingFiles: 'false',
-			serializableModel : 'flase',
+			serializableModel : 'false',
 			javaVersion: '17',
 			libraryVersion: '3.1.0',
 			useBeanValidation: 'false',
